@@ -1,6 +1,6 @@
 {
-  "name": "Registro de Entrenamientos",
-  "short_name": "Entrenamientos",
+  "name": "FITTRAK",
+  "short_name": "FITTRAK",
   "description": "Registro de entrenamientos con pesas",
   "start_url": "./index.html",
   "scope": "./",
