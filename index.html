@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<title>Entrenamientos</title>
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0f1115">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Entrenamientos">
+
+<style>
+  html,body{margin:0;height:100%;background:#0f1115;overflow:hidden;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;}
+  #app{position:fixed;inset:0;border:0;width:100%;height:100%;}
+  #setup{position:fixed;inset:0;display:none;align-items:center;justify-content:center;
+    padding:28px;color:#f2f4f8;text-align:center;}
+  #setup .box{max-width:420px;}
+  #setup h1{color:#e85d2a;font-size:20px;}
+  #setup p{color:#9aa3b2;font-size:15px;line-height:1.6;}
+  #setup code{background:#22262e;padding:2px 6px;border-radius:6px;font-size:13px;}
+</style>
+</head>
+<body>
+
+  <!-- La app real (Apps Script) se carga aquí a pantalla completa -->
+  <iframe id="app" allow="clipboard-write; downloads"></iframe>
+
+  <!-- Pantalla de aviso si todavía no has puesto tu URL -->
+  <div id="setup"><div class="box">
+    <h1>Falta configurar la app</h1>
+    <p>Abre el archivo <code>index.html</code> y pega la URL de tu aplicación
+    de Apps Script (la que termina en <code>/exec</code>) dentro de la variable
+    <code>APP_URL</code>, en la parte de arriba.</p>
+  </div></div>
+
+<script>
+  /* =======================================================
+   *   👇  PEGA AQUÍ LA URL DE TU APP DE APPS SCRIPT
+   *   (Implementar › …/exec). Debe ir entre las comillas.
+   * ======================================================= */
+  const APP_URL = "PEGA_AQUI_TU_URL_DE_APPS_SCRIPT";
+
+
+  if (!APP_URL || APP_URL.indexOf("script.google.com") === -1) {
+    document.getElementById("app").style.display = "none";
+    document.getElementById("setup").style.display = "flex";
+  } else {
+    document.getElementById("app").src = APP_URL;
+  }
+
+  // Registra el service worker (necesario para poder "Instalar" la app)
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", function () {
+      navigator.serviceWorker.register("sw.js").catch(function () {});
+    });
+  }
+</script>
+</body>
+</html>
